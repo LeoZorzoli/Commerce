@@ -1,0 +1,26 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+<div>
+
+    {% if auctions %}
+        {% for auction in auctions %}
+            <div>
+                <ul>
+                    <li>Author: {{auction.user}}</li>
+                    <li>Title: {{auction.title}}</li>
+                    <li>Description: {{auction.description}}</li>
+                    <li>Category: {{auction.category}}</li>
+                    <li>Initial Bid: {{auction.starting_bid}}</li>
+                </ul>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div>
+            <h1>This category doesn't have auctions.</h1>
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

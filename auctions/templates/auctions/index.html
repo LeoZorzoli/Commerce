@@ -3,5 +3,36 @@
 {% block body %}
     <h2>Active Listings</h2>
 
-    TODO
+    {% for auction in auctions %}
+        <div>
+            <ul>
+                <li>Author: {{auction.user}}</li>
+                <li>Title: {{auction.title}}</li>
+                <li>Description: {{auction.description}}</li>
+                <li>Category: {{auction.category}}</li>
+                <li>Initial Bid: {{auction.starting_bid}}</li>
+            </ul>
+        </div>
+        <form id="addToWatchlist" action="{% url 'add_to_watchlist' auction=auction.id %}">
+            {% csrf_token %}
+            <button class="btn btn-dark" type="submit">Add to Watchlist</button>
+        </form>
+    {% endfor %}
+
+    <script type="text/javascript">
+        $(document).on('submit', '#addToWatchlist', function(e){
+            e.preventDefault();
+
+            $.ajax({
+                type:'POST',
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                success:function(){
+                    var watchlist = document.getElementById('watchListTotal')
+                    watchlist.innerHTML = ''
+                }
+            })
+        })
+    </script>
+    
 {% endblock %}

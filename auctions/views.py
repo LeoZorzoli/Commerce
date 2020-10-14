@@ -1,14 +1,24 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 
-from .models import User
+from .models import User, Auction, Bid, Category, Comment, PersonalWatchlist
+from .forms import AuctionForm
 
 
 def index(request):
-    return render(request, "auctions/index.html")
+    auctions = Auction.objects.all()
+    total_categories = Category.objects.all() 
+    my_watchlist = PersonalWatchlist.objects.get(user=request.user)
+    totalAuctions = my_watchlist.auctions.count()
+    context = {
+        'auctions': auctions,
+        'categories': total_categories,
+        'totalAuctions': totalAuctions,
+    }
+    return render(request, "auctions/index.html", context)
 
 
 def login_view(request):
@@ -52,6 +62,7 @@ def register(request):
         # Attempt to create new user
         try:
             user = User.objects.create_user(username, email, password)
+            personal_watchlist = PersonalWatchlist.objects.create(user=user)
             user.save()
         except IntegrityError:
             return render(request, "auctions/register.html", {
@@ -61,3 +72,77 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "auctions/register.html")
+
+
+def add_auction(request):
+    total_categories = Category.objects.all() 
+    my_watchlist = PersonalWatchlist.objects.get(user=request.user)
+    totalAuctions = my_watchlist.auctions.count()
+    
+    if request.method == 'GET':
+        context = {
+            'form': AuctionForm(),
+            'categories': total_categories,
+            'totalAuctions': totalAuctions,
+        }
+
+        return render(request, "auctions/add_auctions.html", context)
+    else:
+        form = AuctionForm(request.POST)
+
+        if form.is_valid():
+            title = form.cleaned_data['title']
+            description = form.cleaned_data['description']
+            starting_bid = form.cleaned_data['starting_bid']
+
+            auctionCreated = Auction.objects.create(
+                user=request.user,
+                title=title, 
+                description=description, 
+                starting_bid=starting_bid,
+            )
+            
+            return redirect('index')
+
+
+def category_view(request, category):
+    total_categories = Category.objects.all() 
+    category_name = Category.objects.get(name=category)
+    auctions = Auction.objects.filter(category=category_name)
+    my_watchlist = PersonalWatchlist.objects.get(user=request.user)
+    totalAuctions = my_watchlist.auctions.count()
+    
+    context = {
+        'auctions': auctions,
+        'categories': total_categories,
+        'totalAuctions': totalAuctions
+    }
+    return render(request, "auctions/category.html", context)
+
+
+def watchlist(request):
+    total_categories = Category.objects.all() 
+    try:
+        my_watchlist = PersonalWatchlist.objects.get(user=request.user)
+        totalAuctions = my_watchlist.auctions.count()
+        context = {
+            'categories': total_categories,
+            'my_watchlist': my_watchlist,
+            'totalAuctions': totalAuctions, 
+        }
+        return render(request, "auctions/watchlist.html", context)
+    except PersonalWatchlist.DoesNotExist:
+        context = {
+            'message': 'Your watchlist is empty.',
+            'categories': total_categories,
+        }
+        return render(request, "auctions/watchlist.html", context)
+
+
+def add_to_watchlist(request, auction):
+    if request.method == 'POST':
+        auction_to_add = Auction.objects.get(id=auction)
+        watchlist = PersonalWatchlist.objects.get(user=request.user)
+        watchlist.auctions.add(auction_to_add)
+        watchlist.save()
+        return HttpResponse('')

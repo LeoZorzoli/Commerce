@@ -1,0 +1,26 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+<div>
+
+    {% if watchlist %}
+        {% for auction in watchlist.auctions.all %}
+            <div>
+                <ul>
+                    <li>Author: {{auction.user}}</li>
+                    <li>Title: {{auction.title}}</li>
+                    <li>Description: {{auction.description}}</li>
+                    <li>Category: {{auction.category}}</li>
+                    <li>Initial Bid: {{auction.starting_bid}}</li>
+                </ul>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div>
+            <h1>{{message}}</h1>
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}
