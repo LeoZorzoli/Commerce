@@ -1,8 +1,10 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
+
+from django.core import serializers
 
 from .models import User, Auction, Bid, Category, Comment, PersonalWatchlist
 from .forms import AuctionForm
@@ -10,7 +12,10 @@ from .forms import AuctionForm
 
 def index(request):
     auctions = Auction.objects.all()
-    total_categories = Category.objects.all() 
+    total_categories = Category.objects.all()
+    user = request.user 
+    if user.id is None:
+        return render(request, "auctions/index.html")
     my_watchlist = PersonalWatchlist.objects.get(user=request.user)
     totalAuctions = my_watchlist.auctions.count()
     context = {
@@ -76,6 +81,8 @@ def register(request):
 
 def add_auction(request):
     total_categories = Category.objects.all() 
+    if user.id is None:
+        return render(request, "auctions/index.html")
     my_watchlist = PersonalWatchlist.objects.get(user=request.user)
     totalAuctions = my_watchlist.auctions.count()
     
@@ -109,6 +116,8 @@ def category_view(request, category):
     total_categories = Category.objects.all() 
     category_name = Category.objects.get(name=category)
     auctions = Auction.objects.filter(category=category_name)
+    if user.id is None:
+        return render(request, "auctions/index.html")
     my_watchlist = PersonalWatchlist.objects.get(user=request.user)
     totalAuctions = my_watchlist.auctions.count()
     

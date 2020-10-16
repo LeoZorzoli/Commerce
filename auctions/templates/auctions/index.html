@@ -11,6 +11,10 @@
                 <li>Description: {{auction.description}}</li>
                 <li>Category: {{auction.category}}</li>
                 <li>Initial Bid: {{auction.starting_bid}}</li>
+                {% if request.user != auction.user %}
+                <button>Bid</button>
+                <input type="number" placeholder="Total bid">
+                {% endif %}
             </ul>
         </div>
         <form id="addToWatchlist" action="{% url 'add_to_watchlist' auction=auction.id %}">
@@ -29,7 +33,8 @@
                 data: $(this).serialize(),
                 success:function(){
                     var watchlist = document.getElementById('watchListTotal')
-                    watchlist.innerHTML = ''
+                    actualValue = watchlist.getAttribute('value')
+                    watchlist.innerHTML = parseInt(actualValue) + 1
                 }
             })
         })
