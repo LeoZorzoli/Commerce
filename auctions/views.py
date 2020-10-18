@@ -81,6 +81,7 @@ def register(request):
 
 def add_auction(request):
     total_categories = Category.objects.all() 
+    user = request.user
     if user.id is None:
         return render(request, "auctions/index.html")
     my_watchlist = PersonalWatchlist.objects.get(user=request.user)
@@ -116,6 +117,7 @@ def category_view(request, category):
     total_categories = Category.objects.all() 
     category_name = Category.objects.get(name=category)
     auctions = Auction.objects.filter(category=category_name)
+    user = request.user
     if user.id is None:
         return render(request, "auctions/index.html")
     my_watchlist = PersonalWatchlist.objects.get(user=request.user)
@@ -154,4 +156,12 @@ def add_to_watchlist(request, auction):
         watchlist = PersonalWatchlist.objects.get(user=request.user)
         watchlist.auctions.add(auction_to_add)
         watchlist.save()
+        return HttpResponse('')
+
+def bid_to_auction(request, auction):
+    if request.method == 'POST':
+        auction_to_add = Auction.objects.get(id=auction)
+        total_bid = request.POST["totalBid"]
+        bid = Bid.objects.create(user=request.user, auction=auction_to_add, bid=total_bid)
+        bid.save()
         return HttpResponse('')

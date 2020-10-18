@@ -12,8 +12,11 @@
                 <li>Category: {{auction.category}}</li>
                 <li>Initial Bid: {{auction.starting_bid}}</li>
                 {% if request.user != auction.user %}
-                <button>Bid</button>
-                <input type="number" placeholder="Total bid">
+                <form auction="{% url 'bid_to_auction' auction=auction.id %}">
+                    {% csrf_token %}
+                    <input type="number" name="totalBid" placeholder="Total bid">
+                    <button type="submit">Send</button>
+                </form>
                 {% endif %}
             </ul>
         </div>
