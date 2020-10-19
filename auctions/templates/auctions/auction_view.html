@@ -16,6 +16,7 @@
                 <li id="initialBid" class="lastBid{{auction.id}}" value="{{auction.starting_bid}}">Initial Bid: {{auction.starting_bid}}</li>
             {% endif %}
             {% if request.user != auction.user %}
+            <small><span id="smallTotalBid">{{auction.bids.count}}</span> bid(s) so far. <span id="yourLastBid">{% if auction.last_bid.user == request.user %}Your bid is the current bid.{% endif %}</span></small>
             <form id="addBid" data-auction="{{auction.id}}" action="{% url 'bid_to_auction' auction=auction.id %}">
                 {% csrf_token %}
                 <input type="number" name="totalBid" id="newBid" placeholder="Total bid">

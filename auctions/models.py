@@ -40,7 +40,7 @@ class Comment(models.Model):
     date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return '%s %s' % (self.user, self.dateComment)
+        return '%s %s' % (self.user, self.date)
 
 class PersonalWatchlist(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE, related_name='user_for_the_watchlist')

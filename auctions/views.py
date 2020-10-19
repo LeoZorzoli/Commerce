@@ -158,6 +158,7 @@ def bid_to_auction(request, auction):
         auction_to_add = Auction.objects.get(id=auction)
         total_bid = request.POST["totalBid"]
         bid = Bid.objects.create(user=request.user, auction=auction_to_add, bid=total_bid)
+        auction_to_add.bids.add(bid)
         auction_to_add.last_bid = bid
         auction_to_add.save()
         return HttpResponse('success')

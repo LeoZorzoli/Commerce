@@ -29,6 +29,9 @@ $(document).on('submit', '#addBid', function(e){
             success: function() {
                 $(`.lastBid${auction}`).val(newBid)
                 $(`.lastBid${auction}`).html(`Last Bid: ${newBid}`)
+                totalValue = $('#smallTotalBid').html()
+                $('#smallTotalBid').html(parseInt(totalValue) + 1)
+                $('#yourLastBid').html('Your bid is the current bid.')
                 $('#newBid').val('')
             }
         });
