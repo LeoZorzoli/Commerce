@@ -9,17 +9,11 @@
                 <li>Author: {{auction.user}}</li>
                 <li><a href="{% url 'auction_view' auction=auction.id %}">Title: {{auction.title}}</a></li>
                 <li>Category: {{auction.category}}</li>
+                <li>{{auction.date}}</li>
                 {% if auction.last_bid %}
                     <li id="lastBid" class="lastBid{{auction.id}}" value="{{auction.last_bid.bid}}">Last Bid: {{auction.last_bid.bid}}</li>
                 {% else %}
                     <li id="initialBid" class="lastBid{{auction.id}}" value="{{auction.starting_bid}}">Initial Bid: {{auction.starting_bid}}</li>
-                {% endif %}
-                {% if request.user != auction.user %}
-                <form id="addBid" data-auction="{{auction.id}}" action="{% url 'bid_to_auction' auction=auction.id %}">
-                    {% csrf_token %}
-                    <input type="number" name="totalBid" id="newBid" placeholder="Total bid">
-                    <button type="submit">Send</button>
-                </form>
                 {% endif %}
             </ul>
         </div>

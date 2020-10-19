@@ -133,22 +133,17 @@ def category_view(request, category):
 
 def watchlist(request):
     total_categories = Category.objects.all() 
-    try:
-        my_watchlist = PersonalWatchlist.objects.get(user=request.user)
-        totalAuctions = my_watchlist.auctions.count()
-        context = {
-            'categories': total_categories,
-            'my_watchlist': my_watchlist,
-            'totalAuctions': totalAuctions, 
-        }
-        return render(request, "auctions/watchlist.html", context)
-    except PersonalWatchlist.DoesNotExist:
-        context = {
-            'message': 'Your watchlist is empty.',
-            'categories': total_categories,
-        }
-        return render(request, "auctions/watchlist.html", context)
+    if request.user.id is None:
+        return redirect('index')
 
+    my_watchlist = PersonalWatchlist.objects.get(user=request.user)
+    totalAuctions = my_watchlist.auctions.count()
+    context = {
+        'categories': total_categories,
+        'my_watchlist': my_watchlist,
+        'totalAuctions': totalAuctions, 
+    }
+    return render(request, "auctions/watchlist.html", context)
 
 def add_to_watchlist(request, auction):
     if request.method == 'POST':
@@ -201,3 +196,11 @@ def delete_auction_from_watchlist(request, auction):
         my_watchlist.auctions.remove(auction)
         my_watchlist.save()
         return HttpResponse('success')
+
+
+def delete_auction(request, auction):
+    if request.method == 'GET':
+        auction = Auction.objects.get(id=auction)
+        if auction.user == request.user:
+            auction.delete()
+            return redirect('index')

@@ -9,6 +9,7 @@
             <li>Title: {{auction.title}}</li>
             <li>Description: {{auction.description}}</li>
             <li>Category: {{auction.category}}</li>
+            <li>Created: {{auction.date}}</li>
             {% if auction.last_bid %}
                 <li id="lastBid" class="lastBid{{auction.id}}" value="{{auction.last_bid.bid}}">Last Bid: {{auction.last_bid.bid}}</li>
             {% else %}
@@ -30,6 +31,10 @@
                 <button class="btn btn-dark" type="submit">Add to Watchlist</button>
             </form>   
         {% endif %}
+    {% endif %}
+
+    {% if auction.user == request.user %}
+        <a href="{% url 'delete_auction' auction=auction.id %}">Delete</a> 
     {% endif %}
     <hr>
 

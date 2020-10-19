@@ -8,3 +8,4 @@ admin.site.register(Bid)
 admin.site.register(Comment)
 admin.site.register(PersonalWatchlist)
 
+

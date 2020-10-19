@@ -4,12 +4,12 @@
 
 <div>
 
-    {% if my_watchlist %}
+    {% if my_watchlist.auctions.all %}
         {% for auction in my_watchlist.auctions.all %}
             <div id="auction{{auction.id}}">
                 <ul>
                     <li>Author: {{auction.user}}</li>
-                    <li>Title: {{auction.title}}</li>
+                    <li><a href="{% url 'auction_view' auction=auction.id %}">Title: {{auction.title}}</a></li>
                     <li>Description: {{auction.description}}</li>
                     <li>Category: {{auction.category}}</li>
                     {% if auction.last_bid %}
@@ -26,7 +26,7 @@
         {% endfor %}
     {% else %}
         <div>
-            <h1>{{message}}</h1>
+            <h1>Your watchlist is empty!</h1>
         </div>
     {% endif %}
 </div>
