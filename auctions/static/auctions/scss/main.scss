@@ -1,3 +1,4 @@
+$button-center: center;
 
 .card{
     margin: 10px;
@@ -30,13 +31,13 @@
 
 .btn-auctions-right{
     margin: 10px;
-    text-align: center;
+    text-align: $button-center;
     font-size: 24px;
 }
 
 .btn-category-left{
     margin: 6px;
-    text-align: center;
+    text-align: $button-center;
     font-size: 18px;
 }
 
@@ -53,6 +54,6 @@
 
 .btn-profile-right{
     margin: 10px;
-    text-align: center;
+    text-align: $button-center;
     font-size: 20px;
 }
