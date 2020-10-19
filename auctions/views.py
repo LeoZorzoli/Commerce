@@ -22,6 +22,7 @@ def index(request):
         'auctions': auctions,
         'categories': total_categories,
         'totalAuctions': totalAuctions,
+        'my_watchlist': my_watchlist,
     }
     return render(request, "auctions/index.html", context)
 

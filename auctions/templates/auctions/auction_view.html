@@ -11,7 +11,7 @@
             <li>Category: {{auction.category}}</li>
             <li>Created: {{auction.date}}</li>
             {% if auction.last_bid %}
-                <li id="lastBid" class="lastBid{{auction.id}}" value="{{auction.last_bid.bid}}">Last Bid: {{auction.last_bid.bid}}</li>
+                <li id="lastBid" class="lastBid{{auction.id}}" value="{{auction.last_bid.bid}}">Current Bid: {{auction.last_bid.bid}}</li>
             {% else %}
                 <li id="initialBid" class="lastBid{{auction.id}}" value="{{auction.starting_bid}}">Initial Bid: {{auction.starting_bid}}</li>
             {% endif %}

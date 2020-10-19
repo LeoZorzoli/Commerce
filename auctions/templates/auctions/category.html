@@ -5,17 +5,26 @@
 <div>
 
     {% if auctions %}
-        {% for auction in auctions %}
-            <div>
-                <ul>
-                    <li>Author: {{auction.user}}</li>
-                    <li>Title: {{auction.title}}</li>
-                    <li>Description: {{auction.description}}</li>
-                    <li>Category: {{auction.category}}</li>
-                    <li>Initial Bid: {{auction.starting_bid}}</li>
-                </ul>
-            </div>
-        {% endfor %}
+        <div class="row justify-content">
+            {% for auction in auctions %}
+                <div class="card col-3">
+                    <div class="card-body">
+                    <h5 class="card-title">{{auction.title}}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{auction.date}}</h6>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        {% if auction.last_bid %}
+                            <li class="list-group-item">Current Bid: ${{auction.last_bid.bid}}</li>
+                        {% else %}
+                            <li class="list-group-item">Initial Bid: ${{auction.starting_bid}}</li>
+                        {% endif %}
+                    </ul>
+                    <div class="card-body">
+                        <a href="{% url 'auction_view' auction=auction.id %}" class="card-link">Auction page</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     {% else %}
         <div>
             <h1>This category doesn't have auctions.</h1>

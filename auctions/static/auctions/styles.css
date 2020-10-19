@@ -1,3 +1,23 @@
 body {
     padding: 10px;
 }
+
+.card{
+    margin: 10px;
+}
+
+.navBar-top{
+    background-color: #c7d5ff;
+}
+
+.principal{
+    background-color: #f2f2f2;
+}
+
+.categories-left{
+    background-color: #546fba;
+}
+
+.actions-right{
+    background-color: #8ba7f7;
+}
