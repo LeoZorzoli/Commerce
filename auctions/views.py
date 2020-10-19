@@ -166,3 +166,38 @@ def bid_to_auction(request, auction):
         auction_to_add.last_bid = bid
         auction_to_add.save()
         return HttpResponse('success')
+
+def auction_view(request, auction):
+    if request.method == 'GET':
+        if request.user.id is None:
+            return redirect('index')
+
+        total_categories = Category.objects.all() 
+        my_watchlist = PersonalWatchlist.objects.get(user=request.user)
+        totalAuctions = my_watchlist.auctions.count()
+        auction = Auction.objects.get(id=auction)
+        context = {
+            'auction': auction,
+            'categories': total_categories,
+            'my_watchlist': my_watchlist,
+            'totalAuctions': totalAuctions,
+
+        }
+        return render(request, 'auctions/auction_view.html', context)
+
+def add_comment(request, auction):
+    if request.method == 'POST':
+        auction = Auction.objects.get(id=auction)
+        comment = request.POST['comment']
+        comment_object = Comment.objects.create(comment=comment, user=request.user)
+        auction.comments.add(comment_object)
+        auction.save()
+        return HttpResponse('success')
+
+def delete_auction_from_watchlist(request, auction):
+    if request.method == 'POST':
+        auction = Auction.objects.get(id=auction)
+        my_watchlist = PersonalWatchlist.objects.get(user=request.user)
+        my_watchlist.auctions.remove(auction)
+        my_watchlist.save()
+        return HttpResponse('success')

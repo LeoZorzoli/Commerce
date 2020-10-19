@@ -1,0 +1,50 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+{% block body %}
+
+<div>
+    <div>
+        <ul>
+            <li>Author: {{auction.user}}</li>
+            <li>Title: {{auction.title}}</li>
+            <li>Description: {{auction.description}}</li>
+            <li>Category: {{auction.category}}</li>
+            {% if auction.last_bid %}
+                <li id="lastBid" class="lastBid{{auction.id}}" value="{{auction.last_bid.bid}}">Last Bid: {{auction.last_bid.bid}}</li>
+            {% else %}
+                <li id="initialBid" class="lastBid{{auction.id}}" value="{{auction.starting_bid}}">Initial Bid: {{auction.starting_bid}}</li>
+            {% endif %}
+            {% if request.user != auction.user %}
+            <form id="addBid" data-auction="{{auction.id}}" action="{% url 'bid_to_auction' auction=auction.id %}">
+                {% csrf_token %}
+                <input type="number" name="totalBid" id="newBid" placeholder="Total bid">
+                <button type="submit">Send</button>
+            </form>
+            {% endif %}
+        </ul>
+    </div>
+    {% if auction.user != request.user %}
+        {% if auction not in my_watchlist.auctions.all %}
+            <form id="addToWatchlist" action="{% url 'add_to_watchlist' auction=auction.id %}">
+                {% csrf_token %}
+                <button class="btn btn-dark" type="submit">Add to Watchlist</button>
+            </form>   
+        {% endif %}
+    {% endif %}
+    <hr>
+
+    {% if auction.comments %}
+    <ul id="commentsList">
+        {% for comment in auction.comments.all %}
+        <li>{{comment.comment}}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <form id="addComment" action="{% url 'add_comment' auction=auction.id %}">
+        {% csrf_token %}
+        <textarea id="commentToAdd" name="comment"></textarea>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+{% endblock %}

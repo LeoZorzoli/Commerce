@@ -1,12 +1,12 @@
 {% extends "auctions/layout.html" %}
-
+{% load static %}
 {% block body %}
 
 <div>
 
     {% if my_watchlist %}
         {% for auction in my_watchlist.auctions.all %}
-            <div>
+            <div id="auction{{auction.id}}">
                 <ul>
                     <li>Author: {{auction.user}}</li>
                     <li>Title: {{auction.title}}</li>
@@ -17,7 +17,10 @@
                     {% else %}
                         <li>Initial Bid: {{auction.starting_bid}}</li>
                     {% endif %}
-                    <button>Delete from watchlist</button>
+                    <form data-auction={{auction.id}} id="deleteFromWatchlist" action="{% url 'delete_auction_from_watchlist' auction=auction.id %}">
+                        {% csrf_token %}
+                        <button>Delete from watchlist</button>
+                    </form>
                 </ul>
             </div>
         {% endfor %}

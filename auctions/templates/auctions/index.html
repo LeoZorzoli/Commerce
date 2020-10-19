@@ -1,5 +1,5 @@
 {% extends "auctions/layout.html" %}
-
+{% load static %}
 {% block body %}
     <h2>Active Listings</h2>
 
@@ -7,8 +7,7 @@
         <div>
             <ul>
                 <li>Author: {{auction.user}}</li>
-                <li>Title: {{auction.title}}</li>
-                <li>Description: {{auction.description}}</li>
+                <li><a href="{% url 'auction_view' auction=auction.id %}">Title: {{auction.title}}</a></li>
                 <li>Category: {{auction.category}}</li>
                 {% if auction.last_bid %}
                     <li id="lastBid" class="lastBid{{auction.id}}" value="{{auction.last_bid.bid}}">Last Bid: {{auction.last_bid.bid}}</li>
@@ -24,49 +23,5 @@
                 {% endif %}
             </ul>
         </div>
-        <form id="addToWatchlist" action="{% url 'add_to_watchlist' auction=auction.id %}">
-            {% csrf_token %}
-            <button class="btn btn-dark" type="submit">Add to Watchlist</button>
-        </form>
     {% endfor %}
-
-    <script type="text/javascript">
-        $(document).on('submit', '#addToWatchlist', function(e){
-            e.preventDefault();
-
-            $.ajax({
-                type:'POST',
-                url: $(this).attr('action'),
-                data: $(this).serialize(),
-                success:function(){
-                    var watchlist = document.getElementById('watchListTotal')
-                    actualValue = watchlist.getAttribute('value')
-                    watchlist.innerHTML = parseInt(actualValue) + 1
-                }
-            })
-        });
-
-        $(document).on('submit', '#addBid', function(e){
-            e.preventDefault();
-            auction = $(this).data("auction")
-            newBid = $('#newBid').val()
-            lastBid = $(`.lastBid${auction}`).val()
-            console.log(newBid, lastBid)
-
-            if(newBid > 0 && newBid > lastBid){
-                $.ajax({
-                    type:'POST',
-                    url: $(this).attr('action'),
-                    data: $(this).serialize(),
-                    success: function() {
-                        console.log("OK")
-                        $(`.lastBid${auction}`).val(newBid)
-                        $(`.lastBid${auction}`).html(`Last Bid: ${newBid}`)
-                        $('#newBid').val('')
-                    }
-                });
-            }
-        })
-    </script>
-    
 {% endblock %}
