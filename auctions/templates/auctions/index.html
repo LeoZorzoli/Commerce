@@ -10,11 +10,15 @@
                 <li>Title: {{auction.title}}</li>
                 <li>Description: {{auction.description}}</li>
                 <li>Category: {{auction.category}}</li>
-                <li>Initial Bid: {{auction.starting_bid}}</li>
+                {% if auction.last_bid %}
+                    <li id="lastBid" class="lastBid{{auction.id}}" value="{{auction.last_bid.bid}}">Last Bid: {{auction.last_bid.bid}}</li>
+                {% else %}
+                    <li id="initialBid" class="lastBid{{auction.id}}" value="{{auction.starting_bid}}">Initial Bid: {{auction.starting_bid}}</li>
+                {% endif %}
                 {% if request.user != auction.user %}
-                <form auction="{% url 'bid_to_auction' auction=auction.id %}">
+                <form id="addBid" data-auction="{{auction.id}}" action="{% url 'bid_to_auction' auction=auction.id %}">
                     {% csrf_token %}
-                    <input type="number" name="totalBid" placeholder="Total bid">
+                    <input type="number" name="totalBid" id="newBid" placeholder="Total bid">
                     <button type="submit">Send</button>
                 </form>
                 {% endif %}
@@ -40,6 +44,28 @@
                     watchlist.innerHTML = parseInt(actualValue) + 1
                 }
             })
+        });
+
+        $(document).on('submit', '#addBid', function(e){
+            e.preventDefault();
+            auction = $(this).data("auction")
+            newBid = $('#newBid').val()
+            lastBid = $(`.lastBid${auction}`).val()
+            console.log(newBid, lastBid)
+
+            if(newBid > 0 && newBid > lastBid){
+                $.ajax({
+                    type:'POST',
+                    url: $(this).attr('action'),
+                    data: $(this).serialize(),
+                    success: function() {
+                        console.log("OK")
+                        $(`.lastBid${auction}`).val(newBid)
+                        $(`.lastBid${auction}`).html(`Last Bid: ${newBid}`)
+                        $('#newBid').val('')
+                    }
+                });
+            }
         })
     </script>
     

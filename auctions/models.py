@@ -21,6 +21,7 @@ class Auction(models.Model):
     img_url = models.CharField(max_length=200, blank=True)
     comments = models.ManyToManyField('Comment', related_name='comments_in_the_auction', blank=True)
     bids = models.ManyToManyField('Bid', related_name='bids_in_the_auction', blank=True)
+    last_bid = models.ForeignKey('Bid', on_delete=models.CASCADE, related_name='last_bid_for_the_auction', blank=True, null=True)
 
     def __str__(self):
         return self.title
