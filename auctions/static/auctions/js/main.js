@@ -28,7 +28,7 @@ $(document).on('submit', '#addBid', function(e){
             data: $(this).serialize(),
             success: function() {
                 $(`.lastBid${auction}`).val(newBid)
-                $(`.lastBid${auction}`).html(`Last Bid: ${newBid}`)
+                $(`.lastBid${auction}`).html(`Current Bid: ${newBid}`)
                 totalValue = $('#smallTotalBid').html()
                 $('#smallTotalBid').html(parseInt(totalValue) + 1)
                 $('#yourLastBid').html('Your bid is the current bid.')

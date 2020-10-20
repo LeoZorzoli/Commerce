@@ -40,17 +40,22 @@
     <hr>
 
     {% if auction.comments %}
-    <ul id="commentsList">
         {% for comment in auction.comments.all %}
-        <li>{{comment.comment}}</li>
+        <div class="comment">
+            <small>{{comment.user}}</small>
+            <p>{{comment.comment}}</p>
+            <small>{{comment.date}}</small>
+        </div>
         {% endfor %}
-    </ul>
     {% endif %}
 
-    <form id="addComment" action="{% url 'add_comment' auction=auction.id %}">
-        {% csrf_token %}
-        <textarea id="commentToAdd" name="comment"></textarea>
-        <button type="submit">Submit</button>
-    </form>
+    <div class="form-group add-comment">
+        <form id="addComment" action="{% url 'add_comment' auction=auction.id %}">
+            {% csrf_token %}
+            <label class="form-check-label" for="commentToAdd"><strong>Leave a comment</strong></label>
+            <textarea class="form-control" rows="3" id="commentToAdd" name="comment"></textarea>
+            <button class="btn btn-info" type="submit">Submit</button>
+        </form>
+    </div>
 </div>
 {% endblock %}

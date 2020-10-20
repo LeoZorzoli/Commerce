@@ -7,43 +7,39 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}Auctions{% endblock %}</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <link href="{% static 'auctions/css/styles.css' %}" rel="stylesheet">
+        <link href="{% static 'auctions/css/main.css' %}" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
     <body>
-
-
         <div class="row navBar-top">
-            <div class="col-2">
+            <div class="col-lg-2 col-sm-0">
                 <a class="name-top-left" href="{% url 'index' %}">Auctions</a>
             </div>
-            <div class="col-8 my-2 my-lg-0">
-                <input id="search-input" type="search" placeholder="Search"/>
-                <button id="label-search">Search</button>
+            <div class="col-lg-8 col-sm-0 my-2 my-lg-0">
             </div>
             {% if user.is_authenticated %}
-            <div class="col-2">
+            <div class="col-lg-2 col-sm-0">
                 <a class="nav-link btn btn-danger btn-profile-right" href="{% url 'logout' %}">Log Out</a>
             </div>
             {% else %}
-            <div class="col-2">
+            <div class="col-lg-2 col-sm-0">
                 <a class="nav-link btn btn-primary" href="{% url 'login' %}">Log In</a>
                 <a class="nav-link btn btn-secondary" href="{% url 'register' %}">Register</a>
             </div>
             {% endif %}
         </div>
         <div class="row principal">
-            <div class="col-2 categories-left">
+            <div class="col-lg-2 col-sm-0 categories-left">
                 <a class="nav-link btn-info btn-category-left disabled"><strong>Categories</strong></a>
                 {% for category in categories %}
-                    <a class="nav-link btn btn-outline-info btn-category-left" href="{% url 'category' category=category.name %}">{{category.name}}</a>
+                    <a class="nav-link btn-category-left" href="{% url 'category' category=category.name %}">{{category.name}}</a>
                 {% endfor %}    
             </div>
-            <div class="col-8">
+            <div class="col-lg-8 col-sm-12">
                 {% block body %}
                 {% endblock %}
             </div>
-            <div class="col-2 actions-right">
+            <div class="col-lg-2 col-sm-0 actions-right">
                 {% if user.is_authenticated %}
                     <a class="nav-link btn btn-info btn-auctions-right" href="{% url 'add_auction' %}">Add Auction</a>
                     <a class="nav-link btn btn-info btn-auctions-right" href="{% url 'watchlist' %}">Watchlist <span id="watchListTotal">{{totalAuctions}}</span></a>
