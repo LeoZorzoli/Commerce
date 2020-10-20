@@ -3,11 +3,12 @@
 {% block body %}
 
 <div>
-
     {% if auctions %}
-        <div class="row justify-content">
+    <p id="listings-title">Active Listings for {{category_name.name}}</p>
+    <div class="container">
+        <div class="row">
             {% for auction in auctions %}
-                <div class="card col-3">
+                <div class="card col-lg-4 col-sm-12">
                     <div class="card-body">
                     <h5 class="card-title">{{auction.title}}</h5>
                     <h6 class="card-subtitle mb-2 text-muted">{{auction.date}}</h6>
@@ -18,6 +19,7 @@
                         {% else %}
                             <li class="list-group-item">Initial Bid: ${{auction.starting_bid}}</li>
                         {% endif %}
+                        <li class="list-group-item">Category: {{auction.category}}</li>
                     </ul>
                     <div class="card-body">
                         <a href="{% url 'auction_view' auction=auction.id %}" class="card-link">Auction page</a>
@@ -25,6 +27,7 @@
                 </div>
             {% endfor %}
         </div>
+    </div>
     {% else %}
         <div>
             <h1>This category doesn't have auctions.</h1>

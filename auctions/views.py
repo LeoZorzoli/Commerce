@@ -127,7 +127,8 @@ def category_view(request, category):
     context = {
         'auctions': auctions,
         'categories': total_categories,
-        'totalAuctions': totalAuctions
+        'totalAuctions': totalAuctions,
+        'category_name': category_name,
     }
     return render(request, "auctions/category.html", context)
 
