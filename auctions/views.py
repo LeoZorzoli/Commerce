@@ -44,6 +44,8 @@ def login_view(request):
                 "message": "Invalid username and/or password."
             })
     else:
+        if request.user.is_authenticated:
+            return redirect('index')
         return render(request, "auctions/login.html")
 
 
@@ -77,6 +79,8 @@ def register(request):
         login(request, user)
         return HttpResponseRedirect(reverse("index"))
     else:
+        if request.user.is_authenticated:
+            return redirect('index')
         return render(request, "auctions/register.html")
 
 
@@ -97,18 +101,22 @@ def add_auction(request):
 
         return render(request, "auctions/add_auctions.html", context)
     else:
-        form = AuctionForm(request.POST)
+        form = AuctionForm(request.POST, request.FILES)
 
         if form.is_valid():
             title = form.cleaned_data['title']
             description = form.cleaned_data['description']
             starting_bid = form.cleaned_data['starting_bid']
+            category = form.cleaned_data['category']
+            image = form.cleaned_data['image']
 
             auctionCreated = Auction.objects.create(
                 user=request.user,
                 title=title, 
                 description=description, 
                 starting_bid=starting_bid,
+                category=category,
+                image=image,
             )
             
             return redirect('index')

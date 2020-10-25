@@ -1,9 +1,13 @@
 from django import forms
-from .models import Category
+from .models import Category, Auction
 
-class AuctionForm(forms.Form):
-    title = forms.CharField(label='Title', max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    description = forms.CharField(label='Description', widget=forms.Textarea(attrs={'class': 'form-control'}))
-    starting_bid = forms.IntegerField(label='Initial Bid', widget=forms.NumberInput(attrs={'class': 'form-control'}))
-    category = forms.ModelChoiceField(queryset=Category.objects.all(), label="Category", widget=forms.Select(attrs={'class': 'form-control'}))
 
+class AuctionForm(forms.ModelForm):
+    """Form for the image model"""
+    class Meta:
+        model = Auction
+        fields = ('title', 'description', 'starting_bid', 'category', 'image')
+        widgets = {'category' : forms.Select(choices=Category.objects.all(), attrs={'class' : 'form-control'}),
+                   'title': forms.TextInput(attrs={'class': 'form-control'}),
+                   'description': forms.TextInput(attrs={'class': 'form-control'}),
+                   'starting_bid': forms.NumberInput(attrs={'class': 'form-control'})} 

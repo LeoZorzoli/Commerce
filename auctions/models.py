@@ -21,6 +21,7 @@ class Auction(models.Model):
     bids = models.ManyToManyField('Bid', related_name='bids_in_the_auction', blank=True)
     last_bid = models.ForeignKey('Bid', on_delete=models.CASCADE, related_name='last_bid_for_the_auction', blank=True, null=True)
     date = models.DateTimeField(default=timezone.now)
+    image = models.ImageField(upload_to='images')
 
     def __str__(self):
         return self.title
