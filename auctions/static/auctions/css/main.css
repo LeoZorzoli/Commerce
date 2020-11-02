@@ -68,12 +68,6 @@
   background-color: #1137cf;
 }
 
-#search-input {
-  margin: 10px;
-  font-size: 20px;
-  width: 40%;
-}
-
 .btn-profile-right {
   margin: 10px;
   font-size: 20px;
@@ -103,4 +97,12 @@
   font-weight: bold;
   text-align: center;
   width: 26px;
+}
+
+#product{
+  padding: 10px;
+}
+
+.img-product{
+  border: 1px solid grey;
 }

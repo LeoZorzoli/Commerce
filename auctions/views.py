@@ -15,7 +15,11 @@ def index(request):
     total_categories = Category.objects.all()
     user = request.user 
     if user.id is None:
-        return render(request, "auctions/index.html")
+        context = {
+            'auctions': auctions,
+            'categories': total_categories
+        }
+        return render(request, "auctions/index.html", context)
     my_watchlist = PersonalWatchlist.objects.get(user=request.user)
     totalAuctions = my_watchlist.auctions.count()
     context = {
@@ -175,10 +179,11 @@ def bid_to_auction(request, auction):
 
 def auction_view(request, auction):
     if request.method == 'GET':
-        if request.user.id is None:
-            return redirect('index')
-
         total_categories = Category.objects.all() 
+
+        if request.user.id is None:
+            return redirect('login')
+
         my_watchlist = PersonalWatchlist.objects.get(user=request.user)
         totalAuctions = my_watchlist.auctions.count()
         auction = Auction.objects.get(id=auction)
