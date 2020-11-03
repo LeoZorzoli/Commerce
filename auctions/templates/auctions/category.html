@@ -11,7 +11,8 @@
                 <div class="card col-lg-4 col-sm-12">
                     <div class="card-body">
                     <h5 class="card-title">{{auction.title}}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">{{auction.date}}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">{{auction.datepublished}}</h6>
+                    <img class="img-fluid" src="{{auction.image.url}}" alt="connect" style="max-height:300px">
                     </div>
                     <ul class="list-group list-group-flush">
                         {% if auction.last_bid %}

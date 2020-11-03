@@ -42,11 +42,12 @@
   border-left: 1px #a3a3a3 solid;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
 .name-top-left {
-  font-size: 36px;
+  font-size: 60px;
   text-align: left;
   margin-left: 40px;
-  font-family: 'Krona One', sans-serif;
+  font-family: 'Bangers', cursive;
   color: #333333;
 }
 
@@ -103,6 +104,33 @@
   padding: 10px;
 }
 
-.img-product{
-  border: 1px solid grey;
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@1,500&display=swap');
+.product-title{
+  font-family: 'DM Mono', monospace;
+  font-size: 26px;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300&display=swap');
+.product-description{
+  font-family: 'DM Mono', monospace;
+}
+
+.product-category{
+  position: absolute;
+  top: 8px;
+  right: 30px;
+}
+
+.product-date{
+  position: absolute;
+  bottom: -14px;
+  right: 30px;
+}
+
+.category-link{
+  color: black !important;
+}
+
+.category-link:hover{
+  color: grey !important;
 }
