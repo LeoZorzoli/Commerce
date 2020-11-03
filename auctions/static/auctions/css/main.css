@@ -123,3 +123,29 @@ body{
 .list-details{
   text-align: center;
 }
+
+.btn-auction{
+  margin-top: 10px;
+  background-color: #0e61c7;
+  color: white;
+}
+
+.btn-auction:hover{
+  color: #e3e3e3;
+}
+
+.dropdown{
+  list-style: none !important;
+}
+
+.dropdown:hover>.dropdown-menu {
+  display: block;
+}
+
+.dropdown>.dropdown-toggle:active {
+    pointer-events: none;
+}
+
+.dropdown-item:active{
+  background-color: #0e61c7;
+}

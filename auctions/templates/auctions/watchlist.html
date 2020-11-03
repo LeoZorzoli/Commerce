@@ -6,7 +6,7 @@
 
     {% if my_watchlist.auctions.all %}
     <p id="listings-title">Active Listings for my Watchlist</p>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
         {% for auction in my_watchlist.auctions.all %}
             <div id="auction{{auction.id}}" class="card list-details col-lg-4 col-sm-12">

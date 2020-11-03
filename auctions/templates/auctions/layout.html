@@ -35,6 +35,9 @@
                 <ul class="navbar-nav ml-auto">
                     {% if user.is_authenticated %}
                     <li class="nav-item">
+                        <a class="nav-link" href=#>{{user.username|title}}</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
                     </li>
                     {% else %}
@@ -54,7 +57,7 @@
                 <ul class="navbar-nav ml-auto">
                     {% for person in persons %}
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           {{person}}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
