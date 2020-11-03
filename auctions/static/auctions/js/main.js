@@ -1,18 +1,33 @@
 $(document).on('submit', '#addToWatchlist', function(e){
     e.preventDefault();
 
-    $.ajax({
-        type:'POST',
-        url: $(this).attr('action'),
-        data: $(this).serialize(),
-        success:function(){
-            watchlist = $('#watchListTotal')
-            actualValue = watchlist.html()
-            watchlist.text(parseInt(actualValue) + 1)
-            form = $('#addToWatchlist')
-            form.remove()
-        }
-    })
+    if ($('#button-auction').hasClass('added')){
+        $.ajax({
+            type:'POST',
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            success:function(){
+                watchlist = $('#watchListTotal')
+                actualValue = watchlist.html()
+                watchlist.text(parseInt(actualValue) - 1)
+                $('#heart').css("color", "white")
+                $('#button-auction').removeClass('added')
+            }
+        })
+    } else{
+        $.ajax({
+            type:'POST',
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            success:function(){
+                watchlist = $('#watchListTotal')
+                actualValue = watchlist.html()
+                watchlist.text(parseInt(actualValue) + 1)
+                $('#heart').css("color", "red")
+                $('#button-auction').addClass('added')
+            }
+        })
+    }
 });
 
 $(document).on('submit', '#addBid', function(e){

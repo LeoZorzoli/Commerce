@@ -121,6 +121,12 @@
   right: 30px;
 }
 
+.product-user{
+  position: absolute;
+  top: 8px;
+  left: 30px;
+}
+
 .product-date{
   position: absolute;
   bottom: -14px;
@@ -133,4 +139,31 @@
 
 .category-link:hover{
   color: grey !important;
+}
+
+.button-auction{
+  color: white;
+  background-color: black;
+  margin-right: 4px;
+}
+
+.product-bid{
+  font-family: 'DM Mono', monospace;
+}
+
+.product{
+  margin: 0px !important;
+}
+
+
+.acution-description{
+  background-color: white;
+  border: 1px solid grey;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 20px;
+}
+
+#addBid{
+  margin-left: 16px;
 }

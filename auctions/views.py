@@ -163,9 +163,13 @@ def add_to_watchlist(request, auction):
     if request.method == 'POST':
         auction_to_add = Auction.objects.get(id=auction)
         watchlist = PersonalWatchlist.objects.get(user=request.user)
-        watchlist.auctions.add(auction_to_add)
-        watchlist.save()
-        return HttpResponse('')
+        if auction_to_add in watchlist.auctions.all():
+            watchlist.auctions.remove(auction_to_add)
+            watchlist.save()
+        else:
+            watchlist.auctions.add(auction_to_add)
+            watchlist.save()
+        return HttpResponse('success')
 
 def bid_to_auction(request, auction):
     if request.method == 'POST':
