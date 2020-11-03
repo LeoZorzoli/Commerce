@@ -4,10 +4,10 @@ body{
   background-color: #f5f5f5;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap');
 .name-page {
   font-size: 40px;
-  font-family: 'Bangers', cursive;
+  font-family: 'Oswald', sans-serif;
   color: black;
 }
 
