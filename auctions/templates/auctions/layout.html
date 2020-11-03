@@ -12,41 +12,58 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
-        <div class="row navBar-top">
-            <div class="col-lg-2 col-sm-0">
-                <a class="name-top-left" href="{% url 'index' %}">Auctions</a>
+        <nav class="navbar navbar-expand-md navbar-light nav-top">
+            <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+                <ul class="navbar-nav mr-auto">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'add_auction' %}">Add Auction</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'watchlist' %}">Watchlist <span id="watchListTotal">{{totalAuctions}}</span></a>
+                        </li>
+                    {% endif %}
+                </ul>
             </div>
-            <div class="col-lg-8 col-sm-0 my-2 my-lg-0">
+            <div class="mx-auto order-0">
+                <a class="name-page" href="{% url 'index' %}">Auctions</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
             </div>
-            {% if user.is_authenticated %}
-            <div class="col-lg-2 col-sm-0">
-                <a class="nav-link btn btn-danger btn-profile-right" href="{% url 'logout' %}">Log Out</a>
+            <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+                <ul class="navbar-nav ml-auto">
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-danger" href="{% url 'logout' %}">Log Out</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    </li>
+                    {% endif %}
+                </ul>
             </div>
-            {% else %}
-            <div class="col-lg-2 col-sm-0">
-                <a class="nav-link btn btn-primary" href="{% url 'login' %}">Log In</a>
-                <a class="nav-link btn btn-secondary" href="{% url 'register' %}">Register</a>
+        </nav>
+        <nav class="navbar navbar-expand-md navbar-light categories">
+            <div class="mx-auto order-0">
+                <ul class="navbar-nav ml-auto">
+                    {% for category in categories %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">{{category.name}}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
             </div>
-            {% endif %}
+        </nav>
+        <div class="middle">
+            {% block body %}
+            {% endblock %}
         </div>
-        <div class="row principal">
-            <div class="col-lg-2 col-sm-0 categories-left">
-                <a class="nav-link btn-info btn-category-left disabled"><strong>Categories</strong></a>
-                {% for category in categories %}
-                    <a class="nav-link btn-category-left" href="{% url 'category' category=category.name %}">{{category.name}}</a>
-                {% endfor %}    
-            </div>
-            <div class="col-lg-8 col-sm-12">
-                {% block body %}
-                {% endblock %}
-            </div>
-            <div class="col-lg-2 col-sm-0 actions-right">
-                {% if user.is_authenticated %}
-                    <a class="nav-link btn btn-info btn-auctions-right" href="{% url 'add_auction' %}">Add Auction</a>
-                    <a class="nav-link btn btn-info btn-auctions-right" href="{% url 'watchlist' %}">Watchlist <span id="watchListTotal">{{totalAuctions}}</span></a>
-                {% endif %}
-            </div>
-        </div>
+        
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js" integrity="sha384-XEerZL0cuoUbHE4nZReLT7nx9gQrQreJekYhJD9WNWhH8nEW+0c5qq7aIo2Wl30J" crossorigin="anonymous"></script>
         <script src="{% static 'auctions/js/main.js' %}" type="text/javascript"></script>

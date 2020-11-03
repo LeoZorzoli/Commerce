@@ -1,23 +1,22 @@
 {% extends "auctions/layout.html" %}
 {% load static %}
 {% block body %}
-    <p id="listings-title">All the products</p>
     <div class="container">
         <div class="row">
             {% for auction in auctions %}
                 <div class="card col-lg-4 col-sm-12">
                     <div class="card-body">
-                    <h5 class="card-title">{{auction.title}}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">{{auction.datepublished}}</h6>
+                    <h5 class="card-title product-title product-description">{{auction.title}}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted product-description">{{auction.datepublished}}</h6>
                     <img class="img-fluid" src="{{auction.image.url}}" alt="connect" style="max-height:300px">
                     </div>
                     <ul class="list-group list-group-flush">
                         {% if auction.last_bid %}
-                            <li class="list-group-item">Current Bid: {{auction.last_bid.bid}}</li>
+                            <li class="list-group-item product-description">Current Bid: {{auction.last_bid.bid}}</li>
                         {% else %}
-                            <li class="list-group-item">Initial Bid: {{auction.starting_bid}}</li>
+                            <li class="list-group-item product-description">Initial Bid: {{auction.starting_bid}}</li>
                         {% endif %}
-                        <li class="list-group-item">Category: {{auction.category}}</li>
+                        <li class="list-group-item product-description">Category: {{auction.category}}</li>
                     </ul>
                     <div class="card-body">
                         <a href="{% url 'auction_view' auction=auction.id %}" class="card-link">Auction page</a>

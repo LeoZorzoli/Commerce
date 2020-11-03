@@ -47,6 +47,16 @@
     <hr>
 </div>
 <div class="row">
+    <div class="form-group add-comment">
+        <form id="addComment" action="{% url 'add_comment' auction=auction.id %}">
+            {% csrf_token %}
+            <label class="form-check-label" for="commentToAdd"><strong>Leave a comment</strong></label>
+            <textarea class="form-control" id="commentToAdd" name="comment"></textarea>
+            <button class="btn btn-info" type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+<div class="row">
     {% if auction.comments %}
         {% for comment in auction.comments.all %}
         <div class="comment">
@@ -56,14 +66,5 @@
         </div>
         {% endfor %}
     {% endif %}
-
-    <div class="form-group add-comment">
-        <form id="addComment" action="{% url 'add_comment' auction=auction.id %}">
-            {% csrf_token %}
-            <label class="form-check-label" for="commentToAdd"><strong>Leave a comment</strong></label>
-            <textarea class="form-control" rows="3" id="commentToAdd" name="comment"></textarea>
-            <button class="btn btn-info" type="submit">Submit</button>
-        </form>
-    </div>
 </div>
 {% endblock %}
