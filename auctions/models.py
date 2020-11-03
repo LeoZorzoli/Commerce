@@ -15,19 +15,27 @@ class Auction(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE, related_name='user_who_make_the_auction')
     title = models.CharField(max_length=100)
     description = models.TextField()
+    person = models.ForeignKey('Person', on_delete=models.CASCADE, related_name='person_to_use', blank=True, null=True)
     category = models.ForeignKey('Category', on_delete=models.CASCADE, related_name='category_for_the_auction', default=3)
     starting_bid = models.IntegerField()
     comments = models.ManyToManyField('Comment', related_name='comments_in_the_auction', blank=True)
     bids = models.ManyToManyField('Bid', related_name='bids_in_the_auction', blank=True)
     last_bid = models.ForeignKey('Bid', on_delete=models.CASCADE, related_name='last_bid_for_the_auction', blank=True, null=True)
     date = models.DateTimeField(default=timezone.now)
-    image = models.ImageField(upload_to='images')
+    image = models.ImageField(upload_to='images', blank=True, null=True)
     
     def datepublished(self):
         return self.date.strftime('%B %d %Y')
 
     def __str__(self):
         return self.title
+
+class Person(models.Model):
+    person = models.CharField(max_length=60)
+    category = models.ManyToManyField('Category', blank=True, null=True)
+
+    def __str__(self):
+        return self.person
 
 class Bid(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE, related_name='user_who_make_the_bid')

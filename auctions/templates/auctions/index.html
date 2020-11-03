@@ -1,13 +1,14 @@
 {% extends "auctions/layout.html" %}
 {% load static %}
 {% block body %}
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             {% for auction in auctions %}
-                <div class="card col-lg-4 col-sm-12">
+                <div class="card list-details col-lg-4 col-sm-12">
                     <div class="card-body">
-                    <h5 class="card-title product-title product-description">{{auction.title}}</h5>
+                    <h5 class="card-title product-title product-description"><i>{{auction.title}}</i></h5>
                     <h6 class="card-subtitle mb-2 text-muted product-description">{{auction.datepublished}}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted product-description">{{auction.person}}</h6>
                     <img class="img-fluid" src="{{auction.image.url}}" alt="connect" style="max-height:300px">
                     </div>
                     <ul class="list-group list-group-flush">

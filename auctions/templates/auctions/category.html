@@ -4,11 +4,10 @@
 
 <div>
     {% if auctions %}
-    <p id="listings-title">Active Listings for {{category_name.name}}</p>
     <div class="container">
         <div class="row">
             {% for auction in auctions %}
-                <div class="card col-lg-4 col-sm-12">
+                <div class="card list-details col-lg-4 col-sm-12">
                     <div class="card-body">
                     <h5 class="card-title">{{auction.title}}</h5>
                     <h6 class="card-subtitle mb-2 text-muted">{{auction.datepublished}}</h6>

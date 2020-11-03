@@ -35,7 +35,7 @@
                 <ul class="navbar-nav ml-auto">
                     {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link btn btn-danger" href="{% url 'logout' %}">Log Out</a>
+                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
                     </li>
                     {% else %}
                     <li class="nav-item">
@@ -48,22 +48,31 @@
                 </ul>
             </div>
         </nav>
+        {% if persons %}
         <nav class="navbar navbar-expand-md navbar-light categories">
             <div class="mx-auto order-0">
                 <ul class="navbar-nav ml-auto">
-                    {% for category in categories %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">{{category.name}}</a>
-                        </li>
+                    {% for person in persons %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          {{person}}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {% for category in categories %}
+                                <a class="dropdown-item" href="{% url 'category' category=category.name person=person.person %}">{{category}}</a>
+                            {% endfor %}
+                        </div>
+                    </li>
                     {% endfor %}
                 </ul>
             </div>
         </nav>
+        {% endif %}
         <div class="middle">
             {% block body %}
             {% endblock %}
         </div>
-        
+
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js" integrity="sha384-XEerZL0cuoUbHE4nZReLT7nx9gQrQreJekYhJD9WNWhH8nEW+0c5qq7aIo2Wl30J" crossorigin="anonymous"></script>
         <script src="{% static 'auctions/js/main.js' %}" type="text/javascript"></script>

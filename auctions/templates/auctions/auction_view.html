@@ -6,7 +6,7 @@
     <div class="col-lg-6 img-product">
             <img class="img-fluid" src="{{auction.image.url}}" alt="connect" style="max-height:600px">
             <p class="product product-description product-user">{{auction.user|title}}</p>
-            <p class="product product-description product-category"><a class="nav-link category-link" href="{% url 'category' category=auction.category.name %}">{{auction.category}}</a></p>
+            <p class="product product-description product-category"><a class="nav-link category-link" href="{% url 'category' category=auction.category.name person=auction.person.person %}">{{auction.category}}</a></p>
             <p class="product product-description product-date">{{auction.datepublished}}</p>
     </div>
     <div class="col-lg-6 acution-description">
