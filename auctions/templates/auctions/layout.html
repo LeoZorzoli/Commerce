@@ -61,7 +61,7 @@
                           {{person}}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            {% for category in categories %}
+                            {% for category in person.category.all %}
                                 <a class="dropdown-item" href="{% url 'category' category=category.name person=person.person %}">{{category}}</a>
                             {% endfor %}
                         </div>
