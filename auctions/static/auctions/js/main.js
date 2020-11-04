@@ -65,7 +65,18 @@ $(document).on('submit', '#addComment', function(e){
         data: $(this).serialize(),
         success: function() {
             console.log('created comment')
-            commentsList.html(comentsListHtml + `<li>${commentToAdd}</li>`)
+            commentsList.html(
+                comentsListHtml +                 
+                    `<div class="comment">
+                        <small><strong>{{comment.user|title}}</strong></small>
+                        <p>{{comment.comment}}</p>
+                        <div class="btn-right">
+                            <small>{{comment.date}}</small>
+                        </div>
+                    </div>`
+            )
+
+            /// ARREGLAR ///
             $('#commentToAdd').val('')
         }
     });

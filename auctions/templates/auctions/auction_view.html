@@ -40,29 +40,37 @@
             </div>
             {% endif %}
             {% if auction.user == request.user %}
-                <a class="btn btn-auction" href="{% url 'delete_auction' auction=auction.id %}">Delete</a> 
+                <div class="btn-right">
+                    <a class="btn btn-auction" href="{% url 'delete_auction' auction=auction.id %}">Delete</a> 
+                </div>
             {% endif %}
         </div>
     </div>
     <hr>
     <div>
         <div class="add-comment">
-            <form id="addComment" action="{% url 'add_comment' auction=auction.id %}">
+            <form id="addComment" method="post" action="{% url 'add_comment' auction=auction.id %}">
                 {% csrf_token %}
                 <label class="form-check-label" for="commentToAdd"><strong>Leave a comment</strong></label>
                 <textarea class="form-control" id="commentToAdd" name="comment"></textarea>
-                <button class="btn btn-auction" type="submit">Submit</button>
+                <div class="btn-right">
+                    <button class="btn btn-auction btn-send-comment" type="submit">Submit</button>
+                </div>
             </form>
         </div>
 
         {% if auction.comments %}
+        <div id="commentsList">
             {% for comment in auction.comments.all %}
                 <div class="comment">
-                    <small>{{comment.user}}</small>
+                    <small><strong>{{comment.user|title}}</strong></small>
                     <p>{{comment.comment}}</p>
-                    <small>{{comment.date}}</small>
+                    <div class="btn-right">
+                        <small>{{comment.date}}</small>
+                    </div>
                 </div>
             {% endfor %}
+        </div>
         {% endif %}
     </div>
 </div>

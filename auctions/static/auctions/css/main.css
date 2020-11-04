@@ -18,8 +18,9 @@ body{
 
 .comment {
   background-color: white;
-  border: 1px solid black;
+  border: 1px solid #e3e3e3;
   padding: 10px;
+  margin-bottom: 10px;
 }
 
 #listings-title {
@@ -148,4 +149,12 @@ body{
 
 .dropdown-item:active{
   background-color: #0e61c7;
+}
+
+.btn-right{
+  text-align: right;
+}
+
+.btn-send-comment{
+  margin-bottom: 10px;
 }

@@ -194,7 +194,6 @@ def auction_view(request, auction):
         auction = Auction.objects.get(id=auction)
         context = {
             'auction': auction,
-            'categories': total_categories,
             'my_watchlist': my_watchlist,
             'persons': persons,
 
