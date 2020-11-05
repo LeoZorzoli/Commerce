@@ -35,6 +35,8 @@ $(document).on('submit', '#addBid', function(e){
     auction = $(this).data("auction")
     newBid = $('#newBid').val()
     lastBid = $(`.lastBid${auction}`).val()
+    message = $('#message')
+    console.log(lastBid)
 
     if(newBid > 0 && newBid > lastBid){
         $.ajax({
@@ -50,36 +52,9 @@ $(document).on('submit', '#addBid', function(e){
                 $('#newBid').val('')
             }
         });
+    } else {
+        message.html('Your bid is lower than the current bid')
     }
-})
-
-$(document).on('submit', '#addComment', function(e){
-    e.preventDefault();
-    commentsList = $('#commentsList')
-    commentToAdd = $('#commentToAdd').val()
-    comentsListHtml = commentsList.html()
-    
-    $.ajax({
-        type:'POST',
-        url: $(this).attr('action'),
-        data: $(this).serialize(),
-        success: function() {
-            console.log('created comment')
-            commentsList.html(
-                comentsListHtml +                 
-                    `<div class="comment">
-                        <small><strong>{{comment.user|title}}</strong></small>
-                        <p>{{comment.comment}}</p>
-                        <div class="btn-right">
-                            <small>{{comment.date}}</small>
-                        </div>
-                    </div>`
-            )
-
-            /// ARREGLAR ///
-            $('#commentToAdd').val('')
-        }
-    });
 })
 
 $(document).on('submit', '#deleteFromWatchlist', function(e){
@@ -100,4 +75,21 @@ $(document).on('submit', '#deleteFromWatchlist', function(e){
             watchlist.text(parseInt(actualValue) - 1)
         }
     })
+})
+
+$(document).on('submit', '#deleteComment', function(e){
+    e.preventDefault();
+    commentId = $(this).data('comment')
+    comment = $(`#comment${commentId}`)
+
+    $.ajax({
+        type:'POST',
+        url: $(this).attr('action'),
+        data: $(this).serialize(),
+        success: function() {
+            console.log('deleted')
+            comment.remove()
+        }
+    })
+
 })

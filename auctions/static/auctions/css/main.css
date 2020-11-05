@@ -155,6 +155,15 @@ body{
   text-align: right;
 }
 
+.btn-middle{
+  text-align: center;
+}
+
 .btn-send-comment{
   margin-bottom: 10px;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@1,500&display=swap');
+.comment-cont{
+  font-family: 'Ubuntu', sans-serif;
 }

@@ -14,9 +14,9 @@
             <p class="product-title"><i>{{auction.title}}</i></p>
             <p class="product-description">{{auction.description}}</p>
             {% if auction.last_bid %}
-                <p id="lastBid" class="lastBid{{auction.id}} product-description product" value="{{auction.last_bid.bid}}"><strong>Current Bid: {{auction.last_bid.bid}}</strong></p>
+                <p id="lastBid" class="lastBid{{auction.id}} product-description product" value="{{auction.last_bid.bid}}">Current Bid: {{auction.last_bid.bid}}</p>
             {% else %}
-                <p id="initialBid" class="lastBid{{auction.id}} product-description product" value="{{auction.starting_bid}}"><strong>Initial Bid: {{auction.starting_bid}}</strong></p>
+                <p id="initialBid" class="lastBid{{auction.id}} product-description product" value="{{auction.starting_bid}}">Initial Bid: {{auction.starting_bid}}</p>
             {% endif %}
             {% if request.user != auction.user %}
             <small class="product product-bid"><span id="smallTotalBid">{{auction.bids.count}}</span> bid(s) so far. <span id="yourLastBid">{% if auction.last_bid.user == request.user %}Your bid is the current bid.{% endif %}</span></small>
@@ -38,6 +38,7 @@
                         </form> 
                     {% endif %}
             </div>
+            <p style="color: red;"><small id="message"></small></p>
             {% endif %}
             {% if auction.user == request.user %}
                 <div class="btn-right">
@@ -48,25 +49,46 @@
     </div>
     <hr>
     <div>
-        <div class="add-comment">
-            <form id="addComment" method="post" action="{% url 'add_comment' auction=auction.id %}">
-                {% csrf_token %}
-                <label class="form-check-label" for="commentToAdd"><strong>Leave a comment</strong></label>
-                <textarea class="form-control" id="commentToAdd" name="comment"></textarea>
-                <div class="btn-right">
-                    <button class="btn btn-auction btn-send-comment" type="submit">Submit</button>
-                </div>
-            </form>
+        <div class="btn-middle">
+            <button type="button" class="btn btn-auction btn-send-comment" data-toggle="modal" data-target="#create">Leave a comment</button>
         </div>
+          
+          <!-- Modal -->
+          <div class="modal fade" id="create" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content new-post-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle">Create comment</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <form method=post action="{% url 'add_comment' auction=auction.id %}">
+                        {% csrf_token %}
+                        <textarea rows="10" class="form-control" name="comment"></textarea>
+                        <br>
+                        <div class="modal-footer">
+                            <button class="btn btn-outline-dark save" type="submit" value="Create"><i class="fa fa-check-square-o"></i> Create</button>
+                        </div>
+                    </form>
+                </div>
+              </div>
+            </div>
+          </div>
 
-        {% if auction.comments %}
+        {% if comments %}
         <div id="commentsList">
-            {% for comment in auction.comments.all %}
-                <div class="comment">
+            {% for comment in comments %}
+                <div id="comment{{comment.id}}" class="comment">
                     <small><strong>{{comment.user|title}}</strong></small>
-                    <p>{{comment.comment}}</p>
+                    <p class="comment-cont">{{comment.comment}}</p>
                     <div class="btn-right">
-                        <small>{{comment.date}}</small>
+                        <form id="deleteComment" data-comment='{{comment.id}}' action="{% url 'delete_comment' comment=comment.id %}">
+                            {% csrf_token %}
+                            <small style="margin-right: 4px;">{{comment.date}}</small>
+                            <button class="btn btn-outline-dark" type="submit">Delete</button>
+                        </form>
                     </div>
                 </div>
             {% endfor %}

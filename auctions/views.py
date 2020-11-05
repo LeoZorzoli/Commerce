@@ -192,10 +192,12 @@ def auction_view(request, auction):
         my_watchlist = PersonalWatchlist.objects.get(user=request.user)
         totalAuctions = my_watchlist.auctions.count()
         auction = Auction.objects.get(id=auction)
+        comments = auction.comments.all().order_by('id').reverse()
         context = {
             'auction': auction,
             'my_watchlist': my_watchlist,
             'persons': persons,
+            'comments': comments,
 
         }
         return render(request, 'auctions/auction_view.html', context)
@@ -204,9 +206,17 @@ def add_comment(request, auction):
     if request.method == 'POST':
         auction = Auction.objects.get(id=auction)
         comment = request.POST['comment']
+        if not comment:
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
         comment_object = Comment.objects.create(comment=comment, user=request.user)
         auction.comments.add(comment_object)
         auction.save()
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+def delete_comment(request, comment):
+    if request.method == 'POST':
+        comment_object = Comment.objects.get(id=comment)
+        comment_object.delete()
         return HttpResponse('success')
 
 def delete_auction_from_watchlist(request, auction):
