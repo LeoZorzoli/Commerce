@@ -33,12 +33,23 @@ $(document).on('submit', '#addToWatchlist', function(e){
 $(document).on('submit', '#addBid', function(e){
     e.preventDefault();
     auction = $(this).data("auction")
+    lastBid = $(this).data("lastbid")
+    startingBid = $(this).data("startingbid")
     newBid = $('#newBid').val()
-    lastBid = $(`.lastBid${auction}`).val()
     message = $('#message')
-    console.log(lastBid)
 
-    if(newBid > 0 && newBid > lastBid){
+    if(lastBid == 'None'){
+        lastBid = 0
+    } else{
+        lastBid = parseInt(lastBid)
+    }
+
+    newBid = parseInt(newBid)
+    startingBid = parseInt(startingBid)
+    
+    console.log(lastBid,startingBid)
+
+    if(newBid > 0 && newBid > lastBid && newBid > startingBid){
         $.ajax({
             type:'POST',
             url: $(this).attr('action'),
@@ -50,8 +61,11 @@ $(document).on('submit', '#addBid', function(e){
                 $('#smallTotalBid').html(parseInt(totalValue) + 1)
                 $('#yourLastBid').html('Your bid is the current bid.')
                 $('#newBid').val('')
+                message.remove()
             }
         });
+    } else if (newBid === lastBid || newBid === startingBid) {
+        message.html('Your bid is equal than the current bid')
     } else {
         message.html('Your bid is lower than the current bid')
     }

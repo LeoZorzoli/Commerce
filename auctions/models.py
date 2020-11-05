@@ -44,7 +44,7 @@ class Bid(models.Model):
     date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return '%s %s' % (self.user , self.bid)
+        return '%s' % (self.bid)
 
 class Comment(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE, related_name='user_who_make_the_comment')

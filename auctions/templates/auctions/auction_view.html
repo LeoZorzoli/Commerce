@@ -21,7 +21,7 @@
             {% if request.user != auction.user %}
             <small class="product product-bid"><span id="smallTotalBid">{{auction.bids.count}}</span> bid(s) so far. <span id="yourLastBid">{% if auction.last_bid.user == request.user %}Your bid is the current bid.{% endif %}</span></small>
             <div class="row">
-                <form id="addBid" data-auction="{{auction.id}}" action="{% url 'bid_to_auction' auction=auction.id %}">
+                <form id="addBid" data-startingbid="{{auction.starting_bid}}" data-lastbid="{{auction.last_bid}}" data-auction="{{auction.id}}" action="{% url 'bid_to_auction' auction=auction.id %}">
                     {% csrf_token %}
                     <input type="number" name="totalBid" id="newBid" placeholder="Total bid">
                     <button class="button-auction" type="submit">Send</button>
@@ -96,4 +96,5 @@
         {% endif %}
     </div>
 </div>
+
 {% endblock %}

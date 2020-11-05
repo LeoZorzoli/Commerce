@@ -1,13 +1,10 @@
-
-
 body{
   background-color: #f5f5f5;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap');
 .name-page {
   font-size: 40px;
-  font-family: 'Oswald', sans-serif;
+  font-family: 'Syne Mono', monospace;
   color: black;
 }
 

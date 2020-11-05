@@ -198,7 +198,7 @@ def auction_view(request, auction):
             'my_watchlist': my_watchlist,
             'persons': persons,
             'comments': comments,
-
+            'totalAuctions':totalAuctions,
         }
         return render(request, 'auctions/auction_view.html', context)
 
