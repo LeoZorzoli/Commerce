@@ -21,7 +21,11 @@
                 {% endif %}
             {% else %}
                 <p id="initialBid" class="lastBid{{auction.id}} product-description product" value="{{auction.starting_bid}}">Close in: {{auction.starting_bid}}</p>
-                <p class="product-description product">Sold to {{auction.last_bid.user|title}}</p>
+                {% if auction.last_bid.user.username == request.user.username %}
+                    <p class="product-description product">You win this listing</p>
+                {% else %}
+                    <p class="product-description product">Sold to {{auction.last_bid.user.username|title}}</p>
+                {% endif %}
             {% endif %}
             {% if request.user != auction.user %}
                 {% if auction.closed == False %}

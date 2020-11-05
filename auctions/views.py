@@ -145,6 +145,20 @@ def category_view(request, category, person):
     }
     return render(request, "auctions/category.html", context)
 
+def my_listings(request, user):
+    user_object = User.objects.get(username=user)
+    auctions = Auction.objects.filter(user=user_object)
+    my_watchlist = PersonalWatchlist.objects.get(user=request.user)
+    totalAuctions = my_watchlist.auctions.count()
+
+    context = {
+        'auctions': auctions,
+        'my_watchlist': my_watchlist,
+        'totalAuctions': totalAuctions,
+    }
+
+    return render(request, "auctions/my_listings.html", context)
+
 
 def watchlist(request):
     persons = Person.objects.all()

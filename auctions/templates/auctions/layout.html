@@ -40,7 +40,7 @@
                             {{user.username|title}}
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">My auctions</a>
+                                <a class="dropdown-item" href="{% url 'my_listings' user=request.user %}">My listings</a>
                                 <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
                         </div>
                     </li>
