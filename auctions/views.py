@@ -11,7 +11,7 @@ from .forms import AuctionForm
 
 
 def index(request):
-    auctions = Auction.objects.all()
+    auctions = Auction.objects.all().order_by('id').reverse()
     persons = Person.objects.all()
     user = request.user 
     if user.id is None:
@@ -129,7 +129,7 @@ def add_auction(request):
 def category_view(request, category, person):
     category_name = Category.objects.get(name=category)
     person_name = Person.objects.get(person=person)
-    auctions = Auction.objects.filter(category=category_name, person=person_name)
+    auctions = Auction.objects.filter(category=category_name, person=person_name).order_by('id').reverse()
     persons = Person.objects.all()
     user = request.user
     if user.id is None:
@@ -151,7 +151,7 @@ def watchlist(request):
     if request.user.id is None:
         return redirect('index')
 
-    my_watchlist = PersonalWatchlist.objects.get(user=request.user)
+    my_watchlist = PersonalWatchlist.objects.get(user=request.user).order_by('id').reverse()
     totalAuctions = my_watchlist.auctions.count()
     context = {
         'my_watchlist': my_watchlist,
