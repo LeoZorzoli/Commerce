@@ -151,6 +151,9 @@ def my_listings(request, user):
     my_watchlist = PersonalWatchlist.objects.get(user=request.user)
     totalAuctions = my_watchlist.auctions.count()
 
+    if request.user.username != user:
+        return redirect('my_listings', user=request.user.username)
+
     context = {
         'auctions': auctions,
         'my_watchlist': my_watchlist,
