@@ -64,7 +64,7 @@ body{
 
 .product-user{
   position: absolute;
-  top: 8px;
+  bottom: -4px;
   left: 30px;
 }
 
@@ -76,6 +76,7 @@ body{
 
 .category-link{
   color: black !important;
+  text-shadow: 1px 0px 0px #000000;
 }
 
 .category-link:hover{
@@ -163,4 +164,40 @@ body{
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@1,500&display=swap');
 .comment-cont{
   font-family: 'Ubuntu', sans-serif;
+}
+
+
+.btn-card{
+  background-color: black;
+  color: white;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.btn-card:hover{
+  background-color: #404040;
+  color: white;
+}
+
+.deleteFromWatchlist{
+  margin-top: 20px;
+}
+
+.login, .register{
+  border: 1px solid #e6e6e6;
+  padding: 20px;
+  margin-top: 6%;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.message{
+  margin-top: 20px;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Trispace:wght@700&display=swap');
+.title{
+  text-align: center;
+  margin-bottom: 10px;
+  font-family: 'Trispace', sans-serif;
 }

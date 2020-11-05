@@ -151,7 +151,7 @@ def watchlist(request):
     if request.user.id is None:
         return redirect('index')
 
-    my_watchlist = PersonalWatchlist.objects.get(user=request.user).order_by('id').reverse()
+    my_watchlist = PersonalWatchlist.objects.get(user=request.user)
     totalAuctions = my_watchlist.auctions.count()
     context = {
         'my_watchlist': my_watchlist,

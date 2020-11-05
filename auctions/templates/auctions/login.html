@@ -3,25 +3,28 @@
 {% block body %}
 
     <div class="container">
+        <div class="login">
+            <h2 class="title">Login</h2>
 
-        <h2>Login</h2>
+            {% if message %}
+                <div style="color: red;">{{ message }}</div>
+            {% endif %}
+            
+            <form action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input autofocus class="form-control" type="text" name="username" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="password" name="password" placeholder="Password">
+                </div>
+                <p class="message">Don't have an account? <a href="{% url 'register' %}">Register here.</a></p>
+                <div class="btn-right">
+                    <input class="btn btn-auction" type="submit" value="Login">
+                </div>
+            </form>
 
-        {% if message %}
-            <div>{{ message }}</div>
-        {% endif %}
-        
-        <form action="{% url 'login' %}" method="post">
-            {% csrf_token %}
-            <div class="form-group">
-                <input autofocus class="form-control" type="text" name="username" placeholder="Username">
-            </div>
-            <div class="form-group">
-                <input class="form-control" type="password" name="password" placeholder="Password">
-            </div>
-            <input class="btn btn-auction" type="submit" value="Login">
-        </form>
-
-        Don't have an account? <a href="{% url 'register' %}">Register here.</a>
+        </div>
     </div>
 
 {% endblock %}
