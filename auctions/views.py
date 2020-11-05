@@ -234,3 +234,11 @@ def delete_auction(request, auction):
         if auction.user == request.user:
             auction.delete()
             return redirect('index')
+
+def close_listing(request, auction):
+    if request.method == 'GET':
+        auction_object = Auction.objects.get(id=auction)
+        auction_object.closed = True
+        auction_object.save()
+
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))

@@ -13,36 +13,46 @@
         <div class="col-lg-6 acution-description">
             <p class="product-title"><i>{{auction.title}}</i></p>
             <p class="product-description">{{auction.description}}</p>
-            {% if auction.last_bid %}
-                <p id="lastBid" class="lastBid{{auction.id}} product-description product" value="{{auction.last_bid.bid}}">Current Bid: {{auction.last_bid.bid}}</p>
+            {% if auction.closed == False %}
+                {% if auction.last_bid %}
+                    <p id="lastBid" class="lastBid{{auction.id}} product-description product" value="{{auction.last_bid.bid}}">Current Bid: {{auction.last_bid.bid}}</p>
+                {% else %}
+                    <p id="initialBid" class="lastBid{{auction.id}} product-description product" value="{{auction.starting_bid}}">Initial Bid: {{auction.starting_bid}}</p>
+                {% endif %}
             {% else %}
-                <p id="initialBid" class="lastBid{{auction.id}} product-description product" value="{{auction.starting_bid}}">Initial Bid: {{auction.starting_bid}}</p>
+                <p id="initialBid" class="lastBid{{auction.id}} product-description product" value="{{auction.starting_bid}}">Close in: {{auction.starting_bid}}</p>
+                <p class="product-description product">Sold to {{auction.last_bid.user|title}}</p>
             {% endif %}
             {% if request.user != auction.user %}
-            <small class="product product-bid"><span id="smallTotalBid">{{auction.bids.count}}</span> bid(s) so far. <span id="yourLastBid">{% if auction.last_bid.user == request.user %}Your bid is the current bid.{% endif %}</span></small>
-            <div class="row">
-                <form id="addBid" data-startingbid="{{auction.starting_bid}}" data-lastbid="{{auction.last_bid}}" data-auction="{{auction.id}}" action="{% url 'bid_to_auction' auction=auction.id %}">
-                    {% csrf_token %}
-                    <input type="number" name="totalBid" id="newBid" placeholder="Total bid">
-                    <button class="button-auction" type="submit">Send</button>
-                </form>
-                    {% if auction not in my_watchlist.auctions.all %}
-                        <form id="addToWatchlist" action="{% url 'add_to_watchlist' auction=auction.id %}">
-                            {% csrf_token %}
-                            <button id="button-auction" class="button-auction" type="submit"><i id="heart" class="fa fa-heart-o"></i></button>
-                        </form>   
-                    {% else %}
-                        <form id="addToWatchlist" action="{% url 'add_to_watchlist' auction=auction.id %}">
-                            {% csrf_token %}
-                            <button id="button-auction" class="button-auction added" type="submit"><i id="heart" style="color:red;" class="fa fa-heart-o"></i></button>
-                        </form> 
-                    {% endif %}
-            </div>
-            <p style="color: red;"><small id="message"></small></p>
+                {% if auction.closed == False %}
+                <small class="product product-bid"><span id="smallTotalBid">{{auction.bids.count}}</span> bid(s) so far. <span id="yourLastBid">{% if auction.last_bid.user == request.user %}Your bid is the current bid.{% endif %}</span></small>
+                <div class="row">
+                    <form id="addBid" data-startingbid="{{auction.starting_bid}}" data-lastbid="{{auction.last_bid}}" data-auction="{{auction.id}}" action="{% url 'bid_to_auction' auction=auction.id %}">
+                        {% csrf_token %}
+                        <input type="number" name="totalBid" id="newBid" placeholder="Total bid">
+                        <button class="button-auction" type="submit">Send</button>
+                    </form>
+                        {% if auction not in my_watchlist.auctions.all %}
+                            <form id="addToWatchlist" action="{% url 'add_to_watchlist' auction=auction.id %}">
+                                {% csrf_token %}
+                                <button id="button-auction" class="button-auction" type="submit"><i id="heart" class="fa fa-heart-o"></i></button>
+                            </form>   
+                        {% else %}
+                            <form id="addToWatchlist" action="{% url 'add_to_watchlist' auction=auction.id %}">
+                                {% csrf_token %}
+                                <button id="button-auction" class="button-auction added" type="submit"><i id="heart" style="color:red;" class="fa fa-heart-o"></i></button>
+                            </form> 
+                        {% endif %}
+                </div>
+                <p style="color: red;"><small id="message"></small></p>
+                {% endif %}
             {% endif %}
             {% if auction.user == request.user %}
                 <div class="btn-right">
                     <a class="btn btn-auction" href="{% url 'delete_auction' auction=auction.id %}">Delete</a> 
+                    {% if auction.closed == False %}
+                    <a class="btn btn-auction" href="{% url 'close_listing' auction=auction.id %}">Close listing</a>
+                    {% endif %}
                 </div>
             {% endif %}
         </div>

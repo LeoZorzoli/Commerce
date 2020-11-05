@@ -3,11 +3,14 @@
 {% block body %}
 
 <div class="container">
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input class="btn btn-outline-dark" type="submit" value="Create">
-    </form>
+    <div class="add-auction">
+        <h2 class="title">Add Listing</h2>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input class="btn btn-outline-dark" type="submit" value="Create">
+        </form>
+    </div>
 </div>
 
 {% endblock %}

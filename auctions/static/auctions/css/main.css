@@ -183,7 +183,7 @@ body{
   margin-top: 20px;
 }
 
-.login, .register{
+.login, .register, .add-auction{
   border: 1px solid #e6e6e6;
   padding: 20px;
   margin-top: 6%;

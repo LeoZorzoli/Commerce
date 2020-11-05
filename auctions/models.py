@@ -23,6 +23,7 @@ class Auction(models.Model):
     last_bid = models.ForeignKey('Bid', on_delete=models.CASCADE, related_name='last_bid_for_the_auction', blank=True, null=True)
     date = models.DateTimeField(default=timezone.now)
     image = models.ImageField(upload_to='images', blank=True, null=True)
+    closed = models.BooleanField(default=False)
     
     def datepublished(self):
         return self.date.strftime('%B %d %Y')
