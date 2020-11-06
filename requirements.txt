@@ -1,0 +1,4 @@
+django==2.2.13
+django-heroku
+gunicorn==19.9.0
+psycopg2
