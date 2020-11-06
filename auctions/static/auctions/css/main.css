@@ -129,6 +129,16 @@ body{
   color: white;
 }
 
+.btn-outline-auction{
+  border: 1px solid #0e61c7;
+  color: #0e61c7;
+}
+
+.btn-outline-auction:hover{
+  background-color: #0e61c7;
+  color: white;
+}
+
 .btn-auction:hover{
   color: #e3e3e3;
 }

@@ -126,3 +126,17 @@ $(document).on('submit', '#deleteComment', function(e){
     })
 
 })
+
+function toggleVisibilityPassword(id, button){
+    var password = document.getElementById(id)
+    var button = document.getElementById(button)
+  
+    if(password.type === "password"){
+      password.type = "text";
+      button.setAttribute('class', "fa fa-eye-slash")
+  
+    } else {
+      password.type = "password"
+      button.setAttribute('class', "fa fa-eye")
+    }
+}

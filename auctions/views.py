@@ -112,6 +112,7 @@ def add_auction(request):
             description = form.cleaned_data['description']
             starting_bid = form.cleaned_data['starting_bid']
             category = form.cleaned_data['category']
+            person = form.cleaned_data['person']
             image = form.cleaned_data['image']
 
             auctionCreated = Auction.objects.create(
@@ -120,6 +121,7 @@ def add_auction(request):
                 description=description, 
                 starting_bid=starting_bid,
                 category=category,
+                person=person,
                 image=image,
             )
             

@@ -8,7 +8,9 @@
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
-            <input class="btn btn-outline-dark" type="submit" value="Create">
+            <div class="btn-right">
+                <input class="btn btn-outline-auction" type="submit" value="Create">
+            </div>
         </form>
     </div>
 </div>
