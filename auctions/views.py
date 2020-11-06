@@ -92,7 +92,7 @@ def add_auction(request):
     persons = Person.objects.all()
     user = request.user
     if user.id is None:
-        return render(request, "auctions/index.html")
+        return redirect('login')
     my_watchlist = PersonalWatchlist.objects.get(user=request.user)
     totalAuctions = my_watchlist.auctions.count()
     
@@ -132,6 +132,7 @@ def category_view(request, category, person):
     auctions = Auction.objects.filter(category=category_name, person=person_name).order_by('id').reverse()
     persons = Person.objects.all()
     user = request.user
+
     if user.id is None:
         return render(request, "auctions/index.html")
     my_watchlist = PersonalWatchlist.objects.get(user=request.user)

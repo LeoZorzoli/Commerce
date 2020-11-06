@@ -13,7 +13,11 @@
                     </div>
                     <ul class="list-group list-group-flush">
                         {% if auction.last_bid %}
-                            <li class="list-group-item product-description">Current Bid: {{auction.last_bid.bid}}</li>
+                            {% if auction.closed == True %}
+                                <li class="list-group-item product-description">Solded in: {{auction.last_bid.bid}}</li>
+                            {% else %}
+                                <li class="list-group-item product-description">Current Bid: {{auction.last_bid.bid}}</li>
+                            {% endif %}
                         {% else %}
                             <li class="list-group-item product-description">Initial Bid: {{auction.starting_bid}}</li>
                         {% endif %}

@@ -201,3 +201,16 @@ body{
   margin-bottom: 10px;
   font-family: 'Trispace', sans-serif;
 }
+
+.nav-link{
+  text-align: center;
+}
+
+.empty{
+  margin-top: 20px;
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #e6e6e6;
+  font-size: 40px;
+  font-family: 'Syne Mono', monospace;
+}
