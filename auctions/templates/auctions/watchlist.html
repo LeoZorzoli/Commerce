@@ -23,10 +23,10 @@
                     <li class="list-group-item">Category: {{auction.category}}</li>
                 </ul>
                 <div class="card-body">
-                    <a href="{% url 'auction_view' auction=auction.id %}" class="card-link btn-card">Auction page <i class="fa fa-angle-double-right"></i></a>
+                    <a href="{% url 'auction_view' auction=auction.id %}" class="card-link btn btn-outline-auction">Auction page <i class="fa fa-angle-double-right"></i></a>
                     <form data-auction={{auction.id}} id="deleteFromWatchlist" action="{% url 'delete_auction_from_watchlist' auction=auction.id %}">
                         {% csrf_token %}
-                        <button class="deleteFromWatchlist btn-card">Delete from watchlist <i class="fa fa-close"></i></button>
+                        <button class="deleteFromWatchlist btn btn-outline-auction">Delete from watchlist <i class="fa fa-close"></i></button>
                     </form>
                 </div>
             </div>    
