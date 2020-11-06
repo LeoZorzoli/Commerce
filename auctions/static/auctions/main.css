@@ -20,13 +20,6 @@ body{
   margin-bottom: 10px;
 }
 
-#listings-title {
-  font-size: 32px;
-  text-align: center;
-  margin: 10px;
-  border-bottom: 1px solid black;
-}
-
 .add-comment {
   margin-top: 40px;
 }
