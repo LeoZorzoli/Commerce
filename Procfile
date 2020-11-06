@@ -1,1 +1,1 @@
-web: gunicorn project4.wsgi --log-file -
+web: gunicorn commerce.wsgi --log-file -
